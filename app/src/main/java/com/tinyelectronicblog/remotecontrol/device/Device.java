@@ -497,8 +497,8 @@ public class Device {
             ArrayList<DeviceButton> buttons = deviceOnline.get(i).buttons;
             for (int i2 = 0; i2 < buttons.size(); i2++) {// for each button of the device
                 DeviceButton b = buttons.get(i2);
-                if (b.sendingThisCommand) continue; //the state of the button is handled elsewhere
-                if (b.isCustomizableValue()) continue; //the state of the button is handled elsewhere
+                if (b.sendingThisCommand) continue; //the state of the button is handled in the onClick (View v) function of the DeviceButton class
+                if (b.isCustomizableValue()) continue; //the state of the button is handled in the onClick (View v) function of the DeviceButton class
                 int i3;
                 for (i3 = 0; i3 < array.size(); i3++) {// for each device command
                     if (b.name.equals(array.get(i3).valueName)) break;
