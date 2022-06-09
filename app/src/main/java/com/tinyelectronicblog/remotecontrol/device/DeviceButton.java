@@ -165,6 +165,7 @@ public class DeviceButton implements View.OnClickListener {
                     while (!RemoteControlAlgorithm.canSendCommands()) {//I wait until I can send the command
                         Thread.sleep(3);
                         if (RemoteControlAlgorithm.getStopRequest()) {
+                            try {sendingThisCommand = false;} catch (Exception err) {Debug.print(err.toString());}
                             sendingCommand = false;
                             return;
                         }
@@ -207,7 +208,7 @@ public class DeviceButton implements View.OnClickListener {
                                         Debug.print("Sent command \"" + COMMAND_TITLE1 + deviceReference.name + tCOMMAND_TITLE2 + name + "\" with the message \"" + MESSAGE + LoadingActivity.getSettings().controllerID + "\"");
                                         //the button will be reactivated by ack from the device
                                     }
-                                    OnOffAlgorithm.setCheckboxStatus(true, 2, true);
+                                    try {OnOffAlgorithm.setCheckboxStatus(true, 2, true);} catch (Exception e) {Debug.print(e.toString());}
                                     try {//hiding the keyboard
                                         InputMethodManager imm = (InputMethodManager) OnOffAlgorithm.getFragmentReference().getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
                                         imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
@@ -215,6 +216,7 @@ public class DeviceButton implements View.OnClickListener {
                                     try {sendingThisCommand = false;} catch (Exception e) {Debug.print(e.toString());}
                                     break;
                                 default://command not send
+                                    sendingThisCommand = false;
                                     statusEnable = true;
                                     button.setEnabled(true);
                                     OnOffAlgorithm.setCheckboxStatus(false, 3, true);
